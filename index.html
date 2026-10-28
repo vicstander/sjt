@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeing Jesus Together — 2026 Solitude Schedule</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1c2430">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SJT 2026">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c2430;
+  --ink-soft:#3a4454;
+  --parchment:#f2ecdd;
+  --parchment-deep:#e7ddc4;
+  --gold:#b8912f;
+  --gold-soft:#e4c877;
+  --wine:#6e2e36;
+  --wine-soft:#f0dcdd;
+  --slate:#35506e;
+  --slate-soft:#dde6ee;
+  --line:rgba(28,36,48,0.14);
+  --shadow:0 18px 40px -24px rgba(28,36,48,0.35);
+  --radius:2px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:'Source Serif 4', Georgia, serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 15% 8%, rgba(184,145,47,0.10), transparent 45%),
+    radial-gradient(circle at 85% 92%, rgba(53,80,110,0.08), transparent 45%);
+  z-index:0;
+}
+
+a{color:inherit;}
+
+/* ---------- Ribbon: day-of-year bookmark ---------- */
+.ribbon-track{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:14px;
+  background:linear-gradient(180deg, var(--parchment-deep), var(--parchment));
+  border-right:1px solid var(--line);
+  z-index:5;
+}
+.ribbon-fill{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  background:linear-gradient(180deg, var(--wine), var(--gold));
+  opacity:0.85;
+  transition:height 0.5s ease;
+}
+.ribbon-marker{
+  position:absolute;
+  left:0;
+  width:14px;
+  height:22px;
+  transform:translateY(-50%);
+  transition:top 0.5s ease;
+}
+.ribbon-marker::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--ink);
+  clip-path:polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ribbon-fill, .ribbon-marker{transition:none;}
+  html{scroll-behavior:auto;}
+}
+
+/* ---------- Layout ---------- */
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width:760px;
+  margin:0 auto;
+  padding:64px 28px 80px 42px;
+}
+
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.eyebrow .brand{color:var(--wine);}
+
+.settings-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:none;
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+  padding:10px 14px;
+  min-height:40px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  touch-action:manipulation;
+  white-space:nowrap;
+}
+.settings-btn:hover{border-color:var(--ink-soft);}
+.settings-btn:focus-visible, button:focus-visible, input:focus-visible{
+  outline:2px solid var(--slate);
+  outline-offset:2px;
+}
+
+header.hero{
+  margin-top:22px;
+  padding-bottom:26px;
+  border-bottom:1px solid var(--line);
+}
+
+.date-heading{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:clamp(40px, 8vw, 64px);
+  line-height:0.98;
+  margin:6px 0 4px;
+  letter-spacing:-0.01em;
+}
+.date-heading em{font-style:italic; font-weight:400; color:var(--wine);}
+
+.date-sub{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--ink-soft);
+  letter-spacing:0.02em;
+}
+
+.nav-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:22px;
+  flex-wrap:wrap;
+}
+.nav-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.04em;
+  background:var(--ink);
+  color:var(--parchment);
+  border:1px solid var(--ink);
+  padding:9px 14px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.nav-btn.ghost{
+  background:transparent;
+  color:var(--ink);
+}
+.nav-btn:hover{opacity:0.85;}
+.nav-btn:disabled{opacity:0.35; cursor:not-allowed;}
+
+.date-picker{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  border:1px solid var(--line);
+  background:var(--parchment);
+  color:var(--ink);
+  padding:8px 10px;
+  border-radius:var(--radius);
+}
+
+/* ---------- Rest day ---------- */
+.rest-card{
+  margin-top:40px;
+  padding:40px 8px;
+  text-align:center;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.rest-card .glyph{font-size:28px; color:var(--gold); margin-bottom:10px;}
+.rest-card h2{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:26px;
+  margin:0 0 8px;
+}
+.rest-card p{
+  color:var(--ink-soft);
+  font-size:15px;
+  max-width:420px;
+  margin:0 auto;
+}
+
+/* ---------- Reading cards ---------- */
+.cards{
+  margin-top:36px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.card{
+  background:rgba(255,255,255,0.35);
+  border:1px solid var(--line);
+  border-left:4px solid var(--track-color, var(--ink));
+  border-radius:var(--radius);
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+}
+.card.track-ot{--track-color:var(--wine);}
+.card.track-nt{--track-color:var(--slate);}
+.card.track-med{--track-color:var(--gold);}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.card-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--track-color);
+  margin:0 0 6px;
+}
+.card-ref{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:24px;
+  margin:0;
+}
+
+.card-actions{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+}
+.action-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  background:transparent;
+  border:1px solid var(--track-color);
+  color:var(--track-color);
+  padding:10px 14px;
+  min-height:40px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  touch-action:manipulation;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.action-btn:hover{background:var(--track-color); color:var(--parchment);}
+.action-btn[aria-busy="true"]{opacity:0.6; cursor:progress;}
+
+.passage-panel{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px dashed var(--line);
+  font-size:17px;
+  line-height:1.7;
+  display:none;
+}
+.passage-panel.open{display:block;}
+.passage-panel .vn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--track-color);
+  vertical-align:super;
+  margin-right:2px;
+}
+.passage-copyright{
+  margin-top:14px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+}
+
+.audio-panel{
+  margin-top:14px;
+  display:none;
+}
+.audio-panel.open{display:block;}
+.audio-panel audio{width:100%;}
+
+.status-line{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-top:12px;
+}
+.status-line.error{color:var(--wine);}
+
+/* ---------- Footer ---------- */
+footer{
+  margin-top:56px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  line-height:1.8;
+}
+footer a{text-decoration:underline;}
+
+/* ---------- Modal ---------- */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(28,36,48,0.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+  padding:20px;
+}
+.modal-backdrop.open{display:flex;}
+.modal{
+  background:var(--parchment);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  max-width:420px;
+  width:100%;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+.modal h2{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:22px;
+  margin:0 0 6px;
+}
+.modal p{
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.6;
+  margin:0 0 18px;
+}
+.modal input[type="text"], .modal input[type="password"]{
+  width:100%;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+  color:var(--ink);
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:18px;
+}
+.modal-actions button{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.04em;
+  padding:9px 14px;
+  border-radius:var(--radius);
+  cursor:pointer;
+}
+.btn-primary{background:var(--ink); color:var(--parchment); border:1px solid var(--ink);}
+.btn-secondary{background:transparent; color:var(--ink-soft); border:1px solid var(--line);}
+
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
+}
+
+@media (max-width:520px){
+  .wrap{padding:48px 18px 60px 32px;}
+  .card{padding:18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon-track" aria-hidden="true">
+  <div class="ribbon-fill" id="ribbonFill"></div>
+  <div class="ribbon-marker" id="ribbonMarker"></div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">
+    <span><span class="brand">Seeing Jesus Together</span> · 2026 Solitude Schedule</span>
+    <button class="settings-btn" id="openSettings" type="button">API Key ⚙</button>
+  </div>
+
+  <header class="hero">
+    <div class="date-heading" id="dateHeading">—</div>
+    <div class="date-sub" id="dateSub">—</div>
+
+    <div class="nav-row">
+      <button class="nav-btn ghost" id="prevDay" type="button" aria-label="Previous day">← Prev</button>
+      <button class="nav-btn" id="todayBtn" type="button">Today</button>
+      <button class="nav-btn ghost" id="nextDay" type="button" aria-label="Next day">Next →</button>
+      <input class="date-picker" type="date" id="datePicker" min="2026-01-01" max="2026-12-31" aria-label="Jump to date">
+    </div>
+  </header>
+
+  <main id="mainContent">
+    <!-- populated by JS -->
+  </main>
+
+  <footer>
+    <div>Scripture readings for this plan come from the <em>Seeing Jesus Together</em> 2026 Solitude Scripture Schedule (© 2026 Seeing Jesus Together, www.SeeingJesusTogether.com).</div>
+    <div id="esvNotice" style="margin-top:8px;">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved. Text and audio provided via the <a href="https://www.esv.org" target="_blank" rel="noopener">ESV API</a>.</div>
+  </footer>
+</div>
+
+<div class="modal-backdrop" id="settingsBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <h2 id="settingsTitle">ESV API Key</h2>
+    <p>Enter your key from api.esv.org to load passage text and audio. It's saved only in this browser (localStorage) — never sent anywhere but api.esv.org.</p>
+    <input type="password" id="apiKeyInput" placeholder="Paste your ESV API key" autocomplete="off">
+    <div class="modal-actions">
+      <button class="btn-secondary" id="clearKey" type="button">Clear</button>
+      <button class="btn-primary" id="saveKey" type="button">Save</button>
+    </div>
+  </div>
+</div>
+
+<script id="plan-data" type="application/json">{"2026-01-01":{"ot":"1 Samuel 26","nt":"Luke 1","meditation":"Luke 1:1-4"},"2026-01-02":{"ot":"1 Samuel 27","nt":"Luke 2","meditation":"Luke 2:41-52"},"2026-01-03":{"ot":"Psalm 53","nt":null,"meditation":"Psalm 53:1-3"},"2026-01-04":{"ot":null,"nt":null,"meditation":null},"2026-01-05":{"ot":"1 Samuel 28","nt":"Luke 3","meditation":"Luke 3:21-22"},"2026-01-06":{"ot":"1 Samuel 29","nt":"Luke 4","meditation":"Luke 4:38-41"},"2026-01-07":{"ot":"1 Samuel 30","nt":"Luke 5","meditation":"Luke 5:27-32"},"2026-01-08":{"ot":"1 Samuel 31","nt":"Luke 6","meditation":"Luke 6:32-36"},"2026-01-09":{"ot":"2 Samuel 1","nt":"Luke 7","meditation":"Luke 7:11-17"},"2026-01-10":{"ot":"Psalm 54","nt":null,"meditation":"Psalm 54:4"},"2026-01-11":{"ot":null,"nt":null,"meditation":null},"2026-01-12":{"ot":"2 Samuel 2","nt":"Luke 8","meditation":"Luke 8:22-25"},"2026-01-13":{"ot":"2 Samuel 3","nt":"Luke 9","meditation":"Luke 9:23-27"},"2026-01-14":{"ot":"2 Samuel 4","nt":"Luke 10","meditation":"Luke 10:38-42"},"2026-01-15":{"ot":"2 Samuel 5","nt":"Luke 11","meditation":"Luke 11:5-13"},"2026-01-16":{"ot":"2 Samuel 6","nt":"Luke 12","meditation":"Luke 12:32-34"},"2026-01-17":{"ot":"Psalm 55","nt":null,"meditation":"Psalm 55:1"},"2026-01-18":{"ot":null,"nt":null,"meditation":null},"2026-01-19":{"ot":"2 Samuel 7","nt":"Luke 13","meditation":"Luke 13:18-21"},"2026-01-20":{"ot":"2 Samuel 8","nt":"Luke 14","meditation":"Luke 14:1-6"},"2026-01-21":{"ot":"2 Samuel 9","nt":"Luke 15","meditation":"Luke 15:1-7"},"2026-01-22":{"ot":"2 Samuel 10","nt":"Luke 16","meditation":"Luke 16:10-13"},"2026-01-23":{"ot":"2 Samuel 11","nt":"Luke 17","meditation":"Luke 17:11-19"},"2026-01-24":{"ot":"Psalm 56","nt":null,"meditation":"Psalm 56:12-13"},"2026-01-25":{"ot":null,"nt":null,"meditation":null},"2026-01-26":{"ot":"2 Samuel 12","nt":"Luke 18","meditation":"Luke 18:15-17"},"2026-01-27":{"ot":"2 Samuel 13","nt":"Luke 19","meditation":"Luke 19:1-10"},"2026-01-28":{"ot":"2 Samuel 14","nt":"Luke 20","meditation":"Luke 20:27-40"},"2026-01-29":{"ot":"2 Samuel 15","nt":"Luke 21","meditation":"Luke 21:1-4"},"2026-01-30":{"ot":"2 Samuel 16","nt":"Luke 22","meditation":"Luke 22:24-27"},"2026-01-31":{"ot":"Psalm 57","nt":null,"meditation":"Psalm 57:1-2"},"2026-02-01":{"ot":null,"nt":null,"meditation":null},"2026-02-02":{"ot":"2 Samuel 17","nt":"Luke 23","meditation":"Luke 23:32-43"},"2026-02-03":{"ot":"2 Samuel 18","nt":"Luke 24","meditation":"Luke 24:13-27"},"2026-02-04":{"ot":"2 Samuel 19","nt":"Acts 1","meditation":"Acts 1:6-11"},"2026-02-05":{"ot":"2 Samuel 20","nt":"Acts 2","meditation":"Acts 2:42-47"},"2026-02-06":{"ot":"2 Samuel 21","nt":"Acts 3","meditation":"Acts 3:1-10"},"2026-02-07":{"ot":"Psalm 58","nt":null,"meditation":"Psalm 58:10-11"},"2026-02-08":{"ot":null,"nt":null,"meditation":null},"2026-02-09":{"ot":"2 Samuel 22","nt":"Acts 4","meditation":"Acts 4:32-35"},"2026-02-10":{"ot":"2 Samuel 23","nt":"Acts 5","meditation":"Acts 5:12-16"},"2026-02-11":{"ot":"2 Samuel 24","nt":"Acts 6","meditation":"Acts 6:1-7"},"2026-02-12":{"ot":"1 Kings 1","nt":"Acts 7","meditation":"Acts 7:51-60"},"2026-02-13":{"ot":"1 Kings 2","nt":"Acts 8","meditation":"Acts 8:1-3"},"2026-02-14":{"ot":"Psalm 59","nt":null,"meditation":"Psalm 59:16-17"},"2026-02-15":{"ot":null,"nt":null,"meditation":null},"2026-02-16":{"ot":"1 Kings 3","nt":"Acts 9","meditation":"Acts 9:1-9"},"2026-02-17":{"ot":"1 Kings 4","nt":"Acts 10","meditation":"Acts 10:34-43"},"2026-02-18":{"ot":"1 Kings 5","nt":"Acts 11","meditation":"Acts 11:19-26"},"2026-02-19":{"ot":"1 Kings 6","nt":"Acts 12","meditation":"Acts 12:20-24"},"2026-02-20":{"ot":"1 Kings 7","nt":"Acts 13","meditation":"Acts 13:1-3"},"2026-02-21":{"ot":"Psalm 60","nt":null,"meditation":"Psalm 60:11-12"},"2026-02-22":{"ot":null,"nt":null,"meditation":null},"2026-02-23":{"ot":"1 Kings 8","nt":"Acts 14","meditation":"Acts 14:19-23"},"2026-02-24":{"ot":"1 Kings 9","nt":"Acts 15","meditation":"Acts 15:36-41"},"2026-02-25":{"ot":"1 Kings 10","nt":"Acts 16","meditation":"Acts 16:25-40"},"2026-02-26":{"ot":"1 Kings 11","nt":"Acts 17","meditation":"Acts 17:10-12"},"2026-02-27":{"ot":"1 Kings 12","nt":"Acts 18","meditation":"Acts 18:24-28"},"2026-02-28":{"ot":"Psalm 61","nt":null,"meditation":"Psalm 61:4-5"},"2026-03-01":{"ot":null,"nt":null,"meditation":null},"2026-03-02":{"ot":"1 Kings 13","nt":"Acts 19","meditation":"Acts 19:11-20"},"2026-03-03":{"ot":"1 Kings 14","nt":"Acts 20","meditation":"Acts 20:17-24"},"2026-03-04":{"ot":"1 Kings 15","nt":"Acts 21","meditation":"Acts 21:10-14"},"2026-03-05":{"ot":"1 Kings 16","nt":"Acts 22","meditation":"Acts 22:22-29"},"2026-03-06":{"ot":"1 Kings 17","nt":"Acts 23","meditation":"Acts 23:6-11"},"2026-03-07":{"ot":"Psalm 62","nt":null,"meditation":"Psalm 62:7-8"},"2026-03-08":{"ot":null,"nt":null,"meditation":null},"2026-03-09":{"ot":"1 Kings 18","nt":"Acts 24","meditation":"Acts 24:10-16"},"2026-03-10":{"ot":"1 Kings 19","nt":"Acts 25","meditation":"Acts 25:1-12"},"2026-03-11":{"ot":"1 Kings 20","nt":"Acts 26","meditation":"Acts 26:12-18"},"2026-03-12":{"ot":"1 Kings 21","nt":"Acts 27","meditation":"Acts 27:21-26"},"2026-03-13":{"ot":"1 Kings 22","nt":"Acts 28","meditation":"Acts 28:1-10"},"2026-03-14":{"ot":"Psalm 63","nt":null,"meditation":"Psalm 63:5-7"},"2026-03-15":{"ot":null,"nt":null,"meditation":null},"2026-03-16":{"ot":"2 Kings 1","nt":"Romans 1","meditation":"Romans 1:11-17"},"2026-03-17":{"ot":"2 Kings 2","nt":"Romans 2","meditation":"Romans 2:1-5"},"2026-03-18":{"ot":"2 Kings 3","nt":"Romans 3","meditation":"Romans 3:20-26"},"2026-03-19":{"ot":"2 Kings 4","nt":"Romans 4","meditation":"Romans 4:3-8"},"2026-03-20":{"ot":"2 Kings 5","nt":"Romans 5","meditation":"Romans 5:1-5"},"2026-03-21":{"ot":"Psalm 64","nt":null,"meditation":"Psalm 64:10"},"2026-03-22":{"ot":null,"nt":null,"meditation":null},"2026-03-23":{"ot":"2 Kings 6","nt":"Romans 6","meditation":"Romans 6:5-11"},"2026-03-24":{"ot":"2 Kings 7","nt":"Romans 7","meditation":"Romans 7:21-25"},"2026-03-25":{"ot":"2 Kings 8","nt":"Romans 8","meditation":"Romans 8:31-39"},"2026-03-26":{"ot":"2 Kings 9","nt":"Romans 9","meditation":"Romans 9:30-33"},"2026-03-27":{"ot":"2 Kings 10","nt":"Romans 10","meditation":"Romans 10:13-15"},"2026-03-28":{"ot":"Psalm 65","nt":null,"meditation":"Psalm 65:1-4"},"2026-03-29":{"ot":null,"nt":null,"meditation":null},"2026-03-30":{"ot":"2 Kings 11","nt":"Romans 11","meditation":"Romans 11:33-36"},"2026-03-31":{"ot":"2 Kings 12","nt":"Romans 12","meditation":"Romans 12:1-2"},"2026-04-01":{"ot":"2 Kings 13","nt":"Romans 13","meditation":"Romans 13:8-10"},"2026-04-02":{"ot":"2 Kings 14","nt":"Romans 14","meditation":"Romans 14:1-4"},"2026-04-03":{"ot":"2 Kings 15","nt":"Romans 15","meditation":"Romans 15:13"},"2026-04-04":{"ot":"Psalm 66","nt":null,"meditation":"Psalm 66:20"},"2026-04-05":{"ot":null,"nt":null,"meditation":null},"2026-04-06":{"ot":"2 Kings 16","nt":"Romans 16","meditation":"Romans 16:20"},"2026-04-07":{"ot":"2 Kings 17","nt":"1 Corinthians 1","meditation":"1 Corinthians 1:18-21"},"2026-04-08":{"ot":"2 Kings 18","nt":"1 Corinthians 2","meditation":"1 Corinthians 2:9"},"2026-04-09":{"ot":"2 Kings 19","nt":"1 Corinthians 3","meditation":"1 Corinthians 3:16-17"},"2026-04-10":{"ot":"2 Kings 20","nt":"1 Corinthians 4","meditation":"1 Corinthians 4:3-5"},"2026-04-11":{"ot":"Psalm 67","nt":null,"meditation":"Psalm 67:1"},"2026-04-12":{"ot":null,"nt":null,"meditation":null},"2026-04-13":{"ot":"2 Kings 21","nt":"1 Corinthians 5","meditation":"1 Corinthians 5:9-13"},"2026-04-14":{"ot":"2 Kings 22","nt":"1 Corinthians 6","meditation":"1 Corinthians 6:15-20"},"2026-04-15":{"ot":"2 Kings 23","nt":"1 Corinthians 7","meditation":"1 Corinthians 7:17"},"2026-04-16":{"ot":"2 Kings 24","nt":"1 Corinthians 8","meditation":"1 Corinthians 8:4-6"},"2026-04-17":{"ot":"2 Kings 25","nt":"1 Corinthians 9","meditation":"1 Corinthians 9:19-23"},"2026-04-18":{"ot":"Psalm 68","nt":null,"meditation":"Psalm 68:5"},"2026-04-19":{"ot":null,"nt":null,"meditation":null},"2026-04-20":{"ot":"1 Chronicles 1","nt":"1 Corinthians 10","meditation":"1 Corinthians 10:31-33"},"2026-04-21":{"ot":"1 Chronicles 2","nt":"1 Corinthians 11","meditation":"1 Corinthians 11:23-26"},"2026-04-22":{"ot":"1 Chronicles 3","nt":"1 Corinthians 12","meditation":"1 Corinthians 12:14-20"},"2026-04-23":{"ot":"1 Chronicles 4","nt":"1 Corinthians 13","meditation":"1 Corinthians 13:8-13"},"2026-04-24":{"ot":"1 Chronicles 5","nt":"1 Corinthians 14","meditation":"1 Corinthians 14:1-3"},"2026-04-25":{"ot":"Psalm 69","nt":null,"meditation":"Psalm 69:13"},"2026-04-26":{"ot":null,"nt":null,"meditation":null},"2026-04-27":{"ot":"1 Chronicles 6","nt":"1 Corinthians 15","meditation":"1 Corinthians 15:1-11"},"2026-04-28":{"ot":"1 Chronicles 7","nt":"1 Corinthians 16","meditation":"1 Corinthians 16:21-24"},"2026-04-29":{"ot":"1 Chronicles 8","nt":"2 Corinthians 1","meditation":"2 Corinthians 1:3-5"},"2026-04-30":{"ot":"1 Chronicles 9","nt":"2 Corinthians 2","meditation":"2 Corinthians 2:12-13"},"2026-05-01":{"ot":"1 Chronicles 10","nt":"2 Corinthians 3","meditation":"2 Corinthians 3:18"},"2026-05-02":{"ot":"Psalm 70","nt":null,"meditation":"Psalm 70:4-5"},"2026-05-03":{"ot":null,"nt":null,"meditation":null},"2026-05-04":{"ot":"1 Chronicles 11","nt":"2 Corinthians 4","meditation":"2 Corinthians 4:16-18"},"2026-05-05":{"ot":"1 Chronicles 12","nt":"2 Corinthians 5","meditation":"2 Corinthians 5:17-21"},"2026-05-06":{"ot":"1 Chronicles 13","nt":"2 Corinthians 6","meditation":"2 Corinthians 6:14-18"},"2026-05-07":{"ot":"1 Chronicles 14","nt":"2 Corinthians 7","meditation":"2 Corinthians 7:5-7"},"2026-05-08":{"ot":"1 Chronicles 15","nt":"2 Corinthians 8","meditation":"2 Corinthians 8:1-5"},"2026-05-09":{"ot":"Psalm 71","nt":null,"meditation":"Psalm 71:22-24"},"2026-05-10":{"ot":null,"nt":null,"meditation":null},"2026-05-11":{"ot":"1 Chronicles 16","nt":"2 Corinthians 9","meditation":"2 Corinthians 9:6-11"},"2026-05-12":{"ot":"1 Chronicles 17","nt":"2 Corinthians 10","meditation":"2 Corinthians 10:3-5"},"2026-05-13":{"ot":"1 Chronicles 18","nt":"2 Corinthians 11","meditation":"2 Corinthians 11:12-15"},"2026-05-14":{"ot":"1 Chronicles 19","nt":"2 Corinthians 12","meditation":"2 Corinthians 12:7-10"},"2026-05-15":{"ot":"1 Chronicles 20","nt":"2 Corinthians 13","meditation":"2 Corinthians 13:11-14"},"2026-05-16":{"ot":"Psalm 72","nt":null,"meditation":"Psalm 72:18-20"},"2026-05-17":{"ot":null,"nt":null,"meditation":null},"2026-05-18":{"ot":"1 Chronicles 21","nt":"Galatians 1","meditation":"Galatians 1:3-5"},"2026-05-19":{"ot":"1 Chronicles 22","nt":"Galatians 2","meditation":"Galatians 2:20"},"2026-05-20":{"ot":"1 Chronicles 23","nt":"Galatians 3","meditation":"Galatians 3:10-14"},"2026-05-21":{"ot":"1 Chronicles 24","nt":"Galatians 4","meditation":"Galatians 4:4-7"},"2026-05-22":{"ot":"1 Chronicles 25","nt":"Galatians 5","meditation":"Galatians 5:13-15"},"2026-05-23":{"ot":"Psalm 73","nt":null,"meditation":"Psalm 73:25-28"},"2026-05-24":{"ot":null,"nt":null,"meditation":null},"2026-05-25":{"ot":"1 Chronicles 26","nt":"Galatians 6","meditation":"Galatians 6:7-10"},"2026-05-26":{"ot":"1 Chronicles 27","nt":"Ephesians 1","meditation":"Ephesians 1:3-10"},"2026-05-27":{"ot":"1 Chronicles 28","nt":"Ephesians 2","meditation":"Ephesians 2:8-10"},"2026-05-28":{"ot":"1 Chronicles 29","nt":"Ephesians 3","meditation":"Ephesians 3:14-19"},"2026-05-29":{"ot":"2 Chronicles 1","nt":"Ephesians 4","meditation":"Ephesians 4:29-32"},"2026-05-30":{"ot":"Psalm 74","nt":null,"meditation":"Psalm 74:12"},"2026-05-31":{"ot":null,"nt":null,"meditation":null},"2026-06-01":{"ot":"2 Chronicles 2","nt":"Ephesians 5","meditation":"Ephesians 5:1-2"},"2026-06-02":{"ot":"2 Chronicles 3","nt":"Ephesians 6","meditation":"Ephesians 6:10-13"},"2026-06-03":{"ot":"2 Chronicles 4","nt":"Philippians 1","meditation":"Philippians 1:21-26"},"2026-06-04":{"ot":"2 Chronicles 5","nt":"Philippians 2","meditation":"Philippians 2:3-10"},"2026-06-05":{"ot":"2 Chronicles 6","nt":"Philippians 3","meditation":"Philippians 3:18-21"},"2026-06-06":{"ot":"Psalm 75","nt":null,"meditation":"Psalm 75:1"},"2026-06-07":{"ot":null,"nt":null,"meditation":null},"2026-06-08":{"ot":"2 Chronicles 7","nt":"Philippians 4","meditation":"Philippians 4:4-7"},"2026-06-09":{"ot":"2 Chronicles 8","nt":"Colossians 1","meditation":"Colossians 1:3-8"},"2026-06-10":{"ot":"2 Chronicles 9","nt":"Colossians 2","meditation":"Colossians 2:6-7"},"2026-06-11":{"ot":"2 Chronicles 10","nt":"Colossians 3","meditation":"Colossians 3:1-4"},"2026-06-12":{"ot":"2 Chronicles 11","nt":"Colossians 4","meditation":"Colossians 4:2-6"},"2026-06-13":{"ot":"Psalm 76","nt":null,"meditation":"Psalm 76:7-9"},"2026-06-14":{"ot":null,"nt":null,"meditation":null},"2026-06-15":{"ot":"2 Chronicles 12","nt":"1 Thessalonians 1","meditation":"1 Thessalonians 1:2-6"},"2026-06-16":{"ot":"2 Chronicles 13","nt":"1 Thessalonians 2","meditation":"1 Thessalonians 2:13"},"2026-06-17":{"ot":"2 Chronicles 14","nt":"1 Thessalonians 3","meditation":"1 Thessalonians 3:11-13"},"2026-06-18":{"ot":"2 Chronicles 15","nt":"1 Thessalonians 4","meditation":"1 Thessalonians 4:3-8"},"2026-06-19":{"ot":"2 Chronicles 16","nt":"1 Thessalonians 5","meditation":"1 Thessalonians 5:23-24"},"2026-06-20":{"ot":"Psalm 77","nt":null,"meditation":"Psalm 77:11-13"},"2026-06-21":{"ot":null,"nt":null,"meditation":null},"2026-06-22":{"ot":"2 Chronicles 17","nt":"2 Thessalonians 1","meditation":"2 Thessalonians 1:3-4"},"2026-06-23":{"ot":"2 Chronicles 18","nt":"2 Thessalonians 2","meditation":"2 Thessalonians 2:16-17"},"2026-06-24":{"ot":"2 Chronicles 19","nt":"2 Thessalonians 3","meditation":"2 Thessalonians 3:16"},"2026-06-25":{"ot":"2 Chronicles 20","nt":"1 Timothy 1","meditation":"1 Timothy 1:15-17"},"2026-06-26":{"ot":"2 Chronicles 21","nt":"1 Timothy 2","meditation":"1 Timothy 2:5-6"},"2026-06-27":{"ot":"Psalm 78","nt":null,"meditation":"Psalm 78:1-4"},"2026-06-28":{"ot":null,"nt":null,"meditation":null},"2026-06-29":{"ot":"2 Chronicles 22","nt":"1 Timothy 3","meditation":"1 Timothy 3:1-7"},"2026-06-30":{"ot":"2 Chronicles 23","nt":"1 Timothy 4","meditation":"1 Timothy 4:12"},"2026-07-01":{"ot":"2 Chronicles 24","nt":"1 Timothy 5","meditation":"1 Timothy 5:24-25"},"2026-07-02":{"ot":"2 Chronicles 25","nt":"1 Timothy 6","meditation":"1 Timothy 6:6-10"},"2026-07-03":{"ot":"2 Chronicles 26","nt":"2 Timothy 1","meditation":"2 Timothy 1:1-2"},"2026-07-04":{"ot":"Psalm 79","nt":null,"meditation":"Psalm 79:13"},"2026-07-05":{"ot":null,"nt":null,"meditation":null},"2026-07-06":{"ot":"2 Chronicles 27","nt":"2 Timothy 2","meditation":"2 Timothy 2:11-13"},"2026-07-07":{"ot":"2 Chronicles 28","nt":"2 Timothy 3","meditation":"2 Timothy 3:16"},"2026-07-08":{"ot":"2 Chronicles 29","nt":"2 Timothy 4","meditation":"2 Timothy 4:22"},"2026-07-09":{"ot":"2 Chronicles 30","nt":"Titus 1","meditation":"Titus 1:5-9"},"2026-07-10":{"ot":"2 Chronicles 31","nt":"Titus 2","meditation":"Titus 2:11-14"},"2026-07-11":{"ot":"Psalm 80","nt":null,"meditation":"Psalm 80:19"},"2026-07-12":{"ot":null,"nt":null,"meditation":null},"2026-07-13":{"ot":"2 Chronicles 32","nt":"Titus 3","meditation":"Titus 3:3-7"},"2026-07-14":{"ot":"2 Chronicles 33","nt":"Philemon","meditation":"Philemon 25"},"2026-07-15":{"ot":"2 Chronicles 34","nt":"John 1","meditation":"John 1:1-5"},"2026-07-16":{"ot":"2 Chronicles 35","nt":"John 2","meditation":"John 2:1-11"},"2026-07-17":{"ot":"2 Chronicles 36","nt":"John 3","meditation":"John 3:16-18"},"2026-07-18":{"ot":"Psalm 81","nt":null,"meditation":"Psalm 81:1-2"},"2026-07-19":{"ot":null,"nt":null,"meditation":null},"2026-07-20":{"ot":"Ezra 1","nt":"John 4","meditation":"John 4:46-54"},"2026-07-21":{"ot":"Ezra 2","nt":"John 5","meditation":"John 5:39-40"},"2026-07-22":{"ot":"Ezra 3","nt":"John 6","meditation":"John 6:16-21"},"2026-07-23":{"ot":"Ezra 4","nt":"John 7","meditation":"John 7:37-39"},"2026-07-24":{"ot":"Ezra 5","nt":"John 8","meditation":"John 8:31-32"},"2026-07-25":{"ot":"Psalm 82","nt":null,"meditation":"Psalm 82:3-4"},"2026-07-26":{"ot":null,"nt":null,"meditation":null},"2026-07-27":{"ot":"Ezra 6","nt":"John 9","meditation":"John 9:1-7"},"2026-07-28":{"ot":"Ezra 7","nt":"John 10","meditation":"John 10:10-11"},"2026-07-29":{"ot":"Ezra 8","nt":"John 11","meditation":"John 11:33-44"},"2026-07-30":{"ot":"Ezra 9","nt":"John 12","meditation":"John 12:24-26"},"2026-07-31":{"ot":"Ezra 10","nt":"John 13","meditation":"John 13:21-30"},"2026-08-01":{"ot":"Psalm 83","nt":null,"meditation":"Psalm 83:1-3"},"2026-08-02":{"ot":null,"nt":null,"meditation":null},"2026-08-03":{"ot":"Nehemiah 1","nt":"John 14","meditation":"John 14:1-3"},"2026-08-04":{"ot":"Nehemiah 2","nt":"John 15","meditation":"John 15:1-8"},"2026-08-05":{"ot":"Nehemiah 3","nt":"John 16","meditation":"John 16:1-4"},"2026-08-06":{"ot":"Nehemiah 4","nt":"John 17","meditation":"John 17:15-18"},"2026-08-07":{"ot":"Nehemiah 5","nt":"John 18","meditation":"John 18:1-11"},"2026-08-08":{"ot":"Psalm 84","nt":null,"meditation":"Psalm 84:10-12"},"2026-08-09":{"ot":null,"nt":null,"meditation":null},"2026-08-10":{"ot":"Nehemiah 6","nt":"John 19","meditation":"John 19:1-11"},"2026-08-11":{"ot":"Nehemiah 7","nt":"John 20","meditation":"John 20:1-9"},"2026-08-12":{"ot":"Nehemiah 8","nt":"John 21","meditation":"John 21:25"},"2026-08-13":{"ot":"Nehemiah 9","nt":"1 John 1","meditation":"1 John 1:7-10"},"2026-08-14":{"ot":"Nehemiah 10","nt":"1 John 2","meditation":"1 John 2:15-17"},"2026-08-15":{"ot":"Psalm 85","nt":null,"meditation":"Psalm 85:6-7"},"2026-08-16":{"ot":null,"nt":null,"meditation":null},"2026-08-17":{"ot":"Nehemiah 11","nt":"1 John 3","meditation":"1 John 3:16-18"},"2026-08-18":{"ot":"Nehemiah 12","nt":"1 John 4","meditation":"1 John 4:7-12"},"2026-08-19":{"ot":"Nehemiah 13","nt":"1 John 5","meditation":"1 John 5:13-15"},"2026-08-20":{"ot":"Esther 1","nt":"2 John","meditation":"2 John 3"},"2026-08-21":{"ot":"Esther 2","nt":"3 John","meditation":"3 John 4"},"2026-08-22":{"ot":"Psalm 86","nt":null,"meditation":"Psalm 86:4-7"},"2026-08-23":{"ot":null,"nt":null,"meditation":null},"2026-08-24":{"ot":"Esther 3","nt":"Revelation 1","meditation":"Revelation 1:1-3"},"2026-08-25":{"ot":"Esther 4","nt":"Revelation 2","meditation":"Revelation 2:1-4"},"2026-08-26":{"ot":"Esther 5","nt":"Revelation 3","meditation":"Revelation 3:19"},"2026-08-27":{"ot":"Esther 6","nt":"Revelation 4","meditation":"Revelation 4:8-11"},"2026-08-28":{"ot":"Esther 7","nt":"Revelation 5","meditation":"Revelation 5:9-10"},"2026-08-29":{"ot":"Psalm 87","nt":null,"meditation":"Psalm 87:1-3"},"2026-08-30":{"ot":null,"nt":null,"meditation":null},"2026-08-31":{"ot":"Esther 8","nt":"Revelation 6","meditation":"Revelation 6:9-17"},"2026-09-01":{"ot":"Esther 9","nt":"Revelation 7","meditation":"Revelation 7:9-12"},"2026-09-02":{"ot":"Esther 10","nt":"Revelation 8","meditation":"Revelation 8:2-5"},"2026-09-03":{"ot":"Job 1","nt":"Revelation 9","meditation":"Revelation 9:20-21"},"2026-09-04":{"ot":"Job 2","nt":"Revelation 10","meditation":"Revelation 10:5-7"},"2026-09-05":{"ot":"Psalm 88","nt":null,"meditation":"Psalm 88:1-2"},"2026-09-06":{"ot":null,"nt":null,"meditation":null},"2026-09-07":{"ot":"Job 3","nt":"Revelation 11","meditation":"Revelation 11:16-18"},"2026-09-08":{"ot":"Job 4","nt":"Revelation 12","meditation":"Revelation 12:7-12"},"2026-09-09":{"ot":"Job 5","nt":"Revelation 13","meditation":"Revelation 13:5-8"},"2026-09-10":{"ot":"Job 6","nt":"Revelation 14","meditation":"Revelation 14:12"},"2026-09-11":{"ot":"Job 7","nt":"Revelation 15","meditation":"Revelation 15:2-4"},"2026-09-12":{"ot":"Psalm 89","nt":null,"meditation":"Psalm 89:1-4"},"2026-09-13":{"ot":null,"nt":null,"meditation":null},"2026-09-14":{"ot":"Job 8","nt":"Revelation 16","meditation":"Revelation 16:1-7"},"2026-09-15":{"ot":"Job 9","nt":"Revelation 17","meditation":"Revelation 17:14"},"2026-09-16":{"ot":"Job 10","nt":"Revelation 18","meditation":"Revelation 18:20"},"2026-09-17":{"ot":"Job 11","nt":"Revelation 19","meditation":"Revelation 19:1-3"},"2026-09-18":{"ot":"Job 12","nt":"Revelation 20","meditation":"Revelation 20:11-15"},"2026-09-19":{"ot":"Psalm 90","nt":null,"meditation":"Psalm 90:1-4"},"2026-09-20":{"ot":null,"nt":null,"meditation":null},"2026-09-21":{"ot":"Job 13","nt":"Revelation 21","meditation":"Revelation 21:1-4"},"2026-09-22":{"ot":"Job 14","nt":"Revelation 22","meditation":"Revelation 22:1-5"},"2026-09-23":{"ot":"Job 15","nt":"Mark 1","meditation":"Mark 1:16-20"},"2026-09-24":{"ot":"Job 16","nt":"Mark 2","meditation":"Mark 2:1-5"},"2026-09-25":{"ot":"Job 17","nt":"Mark 3","meditation":"Mark 3:1-6"},"2026-09-26":{"ot":"Psalm 91","nt":null,"meditation":"Psalm 91:1-2"},"2026-09-27":{"ot":null,"nt":null,"meditation":null},"2026-09-28":{"ot":"Job 18","nt":"Mark 4","meditation":"Mark 4:35-41"},"2026-09-29":{"ot":"Job 19","nt":"Mark 5","meditation":"Mark 5:18-20"},"2026-09-30":{"ot":"Job 20","nt":"Mark 6","meditation":"Mark 6:53-56"},"2026-10-01":{"ot":"Job 21","nt":"Mark 7","meditation":"Mark 7:14-23"},"2026-10-02":{"ot":"Job 22","nt":"Mark 8","meditation":"Mark 8:31-38"},"2026-10-03":{"ot":"Psalm 92","nt":null,"meditation":"Psalm 92:1-4"},"2026-10-04":{"ot":null,"nt":null,"meditation":null},"2026-10-05":{"ot":"Job 23","nt":"Mark 9","meditation":"Mark 9:33-37"},"2026-10-06":{"ot":"Job 24","nt":"Mark 10","meditation":"Mark 10:46-52"},"2026-10-07":{"ot":"Job 25","nt":"Mark 11","meditation":"Mark 11:15-19"},"2026-10-08":{"ot":"Job 26","nt":"Mark 12","meditation":"Mark 12:41-44"},"2026-10-09":{"ot":"Job 27","nt":"Mark 13","meditation":"Mark 13:32-37"},"2026-10-10":{"ot":"Psalm 93","nt":null,"meditation":"Psalm 93:3-4"},"2026-10-11":{"ot":null,"nt":null,"meditation":null},"2026-10-12":{"ot":"Job 28","nt":"Mark 14","meditation":"Mark 14:22-25"},"2026-10-13":{"ot":"Job 29","nt":"Mark 15","meditation":"Mark 15:33-39"},"2026-10-14":{"ot":"Job 30","nt":"Mark 16:1-8","meditation":"Mark 16:1-8"},"2026-10-15":{"ot":"Job 31","nt":"1 Peter 1","meditation":"1 Peter 1:3-8"},"2026-10-16":{"ot":"Job 32","nt":"1 Peter 2","meditation":"1 Peter 2:10-11"},"2026-10-17":{"ot":"Psalm 94","nt":null,"meditation":"Psalm 94:12-15"},"2026-10-18":{"ot":null,"nt":null,"meditation":null},"2026-10-19":{"ot":"Job 33","nt":"1 Peter 3","meditation":"1 Peter 3:13-17"},"2026-10-20":{"ot":"Job 34","nt":"1 Peter 4","meditation":"1 Peter 4:7-11"},"2026-10-21":{"ot":"Job 35","nt":"1 Peter 5","meditation":"1 Peter 5:6-11"},"2026-10-22":{"ot":"Job 36","nt":"2 Peter 1","meditation":"2 Peter 1:1-2"},"2026-10-23":{"ot":"Job 37","nt":"2 Peter 2","meditation":"2 Peter 2:1-3"},"2026-10-24":{"ot":"Psalm 95","nt":null,"meditation":"Psalm 95:1-6"},"2026-10-25":{"ot":null,"nt":null,"meditation":null},"2026-10-26":{"ot":"Job 38","nt":"2 Peter 3","meditation":"2 Peter 3:8-13"},"2026-10-27":{"ot":"Job 39","nt":"Jude","meditation":"Jude 24-25"},"2026-10-28":{"ot":"Job 40","nt":"Hebrews 1","meditation":"Hebrews 1:1-4"},"2026-10-29":{"ot":"Job 41","nt":"Hebrews 2","meditation":"Hebrews 2:14-18"},"2026-10-30":{"ot":"Job 42","nt":"Hebrews 3","meditation":"Hebrews 3:12-14"},"2026-10-31":{"ot":"Psalm 96","nt":null,"meditation":"Psalm 96:1-5"},"2026-11-01":{"ot":null,"nt":null,"meditation":null},"2026-11-02":{"ot":"Proverbs 1","nt":"Hebrews 4","meditation":"Hebrews 4:14-16"},"2026-11-03":{"ot":"Proverbs 2","nt":"Hebrews 5","meditation":"Hebrews 5:11-14"},"2026-11-04":{"ot":"Proverbs 3","nt":"Hebrews 6","meditation":"Hebrews 6:13-20"},"2026-11-05":{"ot":"Proverbs 4","nt":"Hebrews 7","meditation":"Hebrews 7:23-28"},"2026-11-06":{"ot":"Proverbs 5","nt":"Hebrews 8","meditation":"Hebrews 8:1-2"},"2026-11-07":{"ot":"Psalm 97","nt":null,"meditation":"Psalm 97:10-12"},"2026-11-08":{"ot":null,"nt":null,"meditation":null},"2026-11-09":{"ot":"Proverbs 6","nt":"Hebrews 9","meditation":"Hebrews 9:28"},"2026-11-10":{"ot":"Proverbs 7","nt":"Hebrews 10","meditation":"Hebrews 10:19-25"},"2026-11-11":{"ot":"Proverbs 8","nt":"Hebrews 11","meditation":"Hebrews 11:1"},"2026-11-12":{"ot":"Proverbs 9","nt":"Hebrews 12","meditation":"Hebrews 12:1-2"},"2026-11-13":{"ot":"Proverbs 10","nt":"Hebrews 13","meditation":"Hebrews 13:20-21"},"2026-11-14":{"ot":"Psalm 98","nt":null,"meditation":"Psalm 98:4-6"},"2026-11-15":{"ot":null,"nt":null,"meditation":null},"2026-11-16":{"ot":"Proverbs 11","nt":"James 1","meditation":"James 1:12-15"},"2026-11-17":{"ot":"Proverbs 12","nt":"James 2","meditation":"James 2:14-17"},"2026-11-18":{"ot":"Proverbs 13","nt":"James 3","meditation":"James 3:3-5"},"2026-11-19":{"ot":"Proverbs 14","nt":"James 4","meditation":"James 4:13-17"},"2026-11-20":{"ot":"Proverbs 15","nt":"James 5","meditation":"James 5:16"},"2026-11-21":{"ot":"Psalm 99","nt":null,"meditation":"Psalm 99:9"},"2026-11-22":{"ot":null,"nt":null,"meditation":null},"2026-11-23":{"ot":"Proverbs 16","nt":"Matthew 1","meditation":"Matthew 1:18-25"},"2026-11-24":{"ot":"Proverbs 17","nt":"Matthew 2","meditation":"Matthew 2:13-18"},"2026-11-25":{"ot":"Proverbs 18","nt":"Matthew 3","meditation":"Matthew 3:13-17"},"2026-11-26":{"ot":"Proverbs 19","nt":"Matthew 4","meditation":"Matthew 4:18-25"},"2026-11-27":{"ot":"Proverbs 20","nt":"Matthew 5","meditation":"Matthew 5:17-20"},"2026-11-28":{"ot":"Psalm 100","nt":null,"meditation":"Psalm 100:5"},"2026-11-29":{"ot":null,"nt":null,"meditation":null},"2026-11-30":{"ot":"Proverbs 21","nt":"Matthew 6","meditation":"Matthew 6:5-13"},"2026-12-01":{"ot":"Proverbs 22","nt":"Matthew 7","meditation":"Matthew 7:12"},"2026-12-02":{"ot":"Proverbs 23","nt":"Matthew 8","meditation":"Matthew 8:14-17"},"2026-12-03":{"ot":"Proverbs 24","nt":"Matthew 9","meditation":"Matthew 9:9-13"},"2026-12-04":{"ot":"Proverbs 25","nt":"Matthew 10","meditation":"Matthew 10:40-42"},"2026-12-05":{"ot":"Psalm 101","nt":null,"meditation":"Psalm 101:3-4"},"2026-12-06":{"ot":null,"nt":null,"meditation":null},"2026-12-07":{"ot":"Proverbs 26","nt":"Matthew 11","meditation":"Matthew 11:28-30"},"2026-12-08":{"ot":"Proverbs 27","nt":"Matthew 12","meditation":"Matthew 12:1-8"},"2026-12-09":{"ot":"Proverbs 28","nt":"Matthew 13","meditation":"Matthew 13:31-33"},"2026-12-10":{"ot":"Proverbs 29","nt":"Matthew 14","meditation":"Matthew 14:13-21"},"2026-12-11":{"ot":"Proverbs 30","nt":"Matthew 15","meditation":"Matthew 15:29-31"},"2026-12-12":{"ot":"Psalm 102","nt":null,"meditation":"Psalm 102:25-27"},"2026-12-13":{"ot":null,"nt":null,"meditation":null},"2026-12-14":{"ot":"Proverbs 31","nt":"Matthew 16","meditation":"Matthew 16:24-28"},"2026-12-15":{"ot":"Ecclesiastes 1","nt":"Matthew 17","meditation":"Matthew 17:14-20"},"2026-12-16":{"ot":"Ecclesiastes 2","nt":"Matthew 18","meditation":"Matthew 18:21-35"},"2026-12-17":{"ot":"Ecclesiastes 3","nt":"Matthew 19","meditation":"Matthew 19:10-12"},"2026-12-18":{"ot":"Ecclesiastes 4","nt":"Matthew 20","meditation":"Matthew 20:25-28"},"2026-12-19":{"ot":"Psalm 103","nt":null,"meditation":"Psalm 103:1-5"},"2026-12-20":{"ot":null,"nt":null,"meditation":null},"2026-12-21":{"ot":"Ecclesiastes 5","nt":"Matthew 21","meditation":"Matthew 21:28-32"},"2026-12-22":{"ot":"Ecclesiastes 6","nt":"Matthew 22","meditation":"Matthew 22:34-40"},"2026-12-23":{"ot":"Ecclesiastes 7","nt":"Matthew 23","meditation":"Matthew 23:27-28"},"2026-12-24":{"ot":"Ecclesiastes 8","nt":"Matthew 24","meditation":"Matthew 24:36-44"},"2026-12-25":{"ot":"Ecclesiastes 9","nt":"Matthew 25","meditation":"Matthew 25:31-40"},"2026-12-26":{"ot":"Psalm 104","nt":null,"meditation":"Psalm 104:1"},"2026-12-27":{"ot":null,"nt":null,"meditation":null},"2026-12-28":{"ot":"Ecclesiastes 10","nt":"Matthew 26","meditation":"Matthew 26:26-29"},"2026-12-29":{"ot":"Ecclesiastes 11","nt":"Matthew 27","meditation":"Matthew 27:45-56"},"2026-12-30":{"ot":"Ecclesiastes 12","nt":"Matthew 28","meditation":"Matthew 28:1-10"},"2026-12-31":{"ot":null,"nt":"Matthew 28","meditation":"Matthew 28:16-20"}}</script>
+<script src="app.js"></script>
+</body>
+</html>
