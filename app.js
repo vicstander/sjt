@@ -20,13 +20,13 @@
 
   function initApp() {
 
-  var PLAN = JSON.parse(document.getElementById("plan-data").textContent);
+  var PLAN = window.SJT_PLAN;
+  if (!PLAN) throw new Error("plan.js did not load");
   var API_KEY_STORAGE = "sjt_esv_api_key";
   var TEXT_ENDPOINT = "https://api.esv.org/v3/passage/text/";
   var HTML_ENDPOINT = "https://api.esv.org/v3/passage/html/";
 
-  var PLAN_START = "2026-01-01";
-  var PLAN_END = "2026-12-31";
+  var PLAN_START = PLAN.MIN_DATE; // first published schedule (Jan 1, 2025); the cycle repeats forever after
 
   var mainEl = document.getElementById("mainContent");
   var dateHeadingEl = document.getElementById("dateHeading");
@@ -52,7 +52,6 @@
 
   function clampToPlan(key) {
     if (key < PLAN_START) return PLAN_START;
-    if (key > PLAN_END) return PLAN_END;
     return key;
   }
 
@@ -132,58 +131,91 @@
     var d = fromKey(currentDate);
     d.setDate(d.getDate() + delta);
     var key = toKey(d);
-    if (key < PLAN_START || key > PLAN_END) return;
+    if (key < PLAN_START) return;
     currentDate = key;
     render();
   }
 
   // ---------- Rendering ----------
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+
+  function restCard(title, text) {
+    return (
+      '<div class="rest-card">' +
+      '<div class="glyph">✦</div>' +
+      "<h2>" + title + "</h2>" +
+      "<p>" + text + "</p>" +
+      "</div>"
+    );
+  }
+
+  function noteBlock(text) {
+    return '<p class="day-note">' + text + "</p>";
+  }
+
   function render() {
-    var entry = PLAN[currentDate] || { ot: null, nt: null, meditation: null };
+    var entry = PLAN.getDay(currentDate);
     var d = fromKey(currentDate);
+    var year = d.getFullYear();
     var doy = dayOfYear(currentDate);
+    var daysInYear = isLeap(year) ? 366 : 365;
 
     dateHeadingEl.innerHTML = MONTHS[d.getMonth()] + " " + d.getDate() + ", <em>" + d.getFullYear() + "</em>";
-    dateSubEl.textContent = WEEKDAYS[d.getDay()] + "  ·  Day " + doy + " of 365";
+    var sub = WEEKDAYS[d.getDay()] + "  ·  Day " + doy + " of " + daysInYear;
+    var tYear = PLAN.templateYearFor(year);
+    if (tYear !== year) sub += "  ·  repeats the " + tYear + " plan";
+    dateSubEl.textContent = sub;
     datePickerEl.value = currentDate;
 
     document.getElementById("prevDay").disabled = currentDate <= PLAN_START;
-    document.getElementById("nextDay").disabled = currentDate >= PLAN_END;
 
-    var pct = (doy / 365) * 100;
+    var pct = (doy / daysInYear) * 100;
     ribbonFillEl.style.height = pct + "%";
     ribbonMarkerEl.style.top = pct + "%";
 
-    var hasAny = entry.ot || entry.nt || entry.meditation;
-
-    if (!hasAny) {
-      mainEl.innerHTML =
-        '<div class="rest-card">' +
-        '<div class="glyph">✦</div>' +
-        "<h2>A day of rest</h2>" +
-        "<p>No assigned reading today — a pause built into the rhythm of the schedule. Use the time for corporate worship, prayer, or simply reflection.</p>" +
-        "</div>";
+    if (!entry) {
+      mainEl.innerHTML = restCard("Before the schedule begins", "The first published schedule starts on January 1, 2025.");
       return;
     }
 
-    var tracks = [
-      { key: "nt", label: "New Testament Chapter", cls: "track-nt", ref: entry.nt },
-      { key: "ot", label: "Old Testament Chapter", cls: "track-ot", ref: entry.ot },
-      { key: "meditation", label: "A Passage for Meditation", cls: "track-med", ref: entry.meditation }
-    ];
+    if (entry.kind === "sunday") {
+      mainEl.innerHTML = restCard("A day of rest", "No assigned reading today — a pause built into the rhythm of the schedule. Use the time for corporate worship, prayer, or simply reflection.");
+      return;
+    }
+    if (entry.kind === "catchup") {
+      mainEl.innerHTML = restCard("A catch-up day", "This year has one more weekday than the reading plan, so there is no new reading today. Use it to catch up on anything you missed, or revisit a passage that stayed with you.");
+      return;
+    }
+    if (entry.kind === "extra-saturday") {
+      mainEl.innerHTML = restCard("No psalm today", "This year has one more Saturday than the plan has psalms. Use it to rest, or return to a psalm you have loved this year.");
+      return;
+    }
+
+    var tracks = [];
+    entry.med.forEach(function (ref) { tracks.push({ kind: "med", label: "A Passage for Meditation", cls: "track-med", ref: ref }); });
+    entry.nt.forEach(function (ref) { tracks.push({ kind: "nt", label: "New Testament Chapter", cls: "track-nt", ref: ref }); });
+    entry.ot.forEach(function (ref) {
+      var isPsalm = /^Psalm /.test(ref);
+      tracks.push({ kind: "ot", label: isPsalm ? "Psalm" : "Old Testament Chapter", cls: "track-ot", ref: ref });
+    });
+    tracks.forEach(function (t, i) { t.key = t.kind + i; });
 
     var html = '<div class="cards">';
-    tracks.forEach(function (t) {
-      if (!t.ref) return;
-      html += renderCard(t);
-    });
+    tracks.forEach(function (t) { html += renderCard(t); });
     html += "</div>";
+
+    if (entry.note === "folded") {
+      html += noteBlock("Two Old Testament chapters today: this year has one fewer weekday than the reading plan, so the last chapter is folded into the final reading day of the year.");
+    }
+    if (entry.reconstructed) {
+      html += noteBlock("This part of the 2027 plan was reconstructed from the 2024 schedule — it may differ from the official 2027 July–December schedule once it is published.");
+    }
+    if (entry.kind === "psalm" && entry.med.length === 0) {
+      html += noteBlock("No meditation excerpt is published for this psalm, so only the full psalm is shown.");
+    }
     mainEl.innerHTML = html;
 
-    tracks.forEach(function (t) {
-      if (!t.ref) return;
-      wireCard(t);
-    });
+    tracks.forEach(function (t) { wireCard(t); });
   }
 
   function cardId(trackKey, suffix) {

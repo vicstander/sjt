@@ -5,10 +5,11 @@
 // IMPORTANT: bump this version string any time index.html/app.js/manifest
 // change, so installed devices pick up the update instead of serving a
 // stale cached copy.
-var CACHE_NAME = "sjt-2026-shell-v2";
+var CACHE_NAME = "sjt-shell-v3";
 var SHELL_FILES = [
   "./index.html",
   "./app.js",
+  "./plan.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
