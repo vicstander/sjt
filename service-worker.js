@@ -5,7 +5,7 @@
 // IMPORTANT: bump this version string any time index.html/app.js/manifest
 // change, so installed devices pick up the update instead of serving a
 // stale cached copy.
-var CACHE_NAME = "sjt-shell-v3";
+var CACHE_NAME = "sjt-shell-v8";
 var SHELL_FILES = [
   "./index.html",
   "./app.js",
