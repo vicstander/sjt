@@ -47,38 +47,12 @@ Calendars don't always match the plan's length, so:
 - **One fewer weekday** (e.g. 2028, 2033, 2034): the plan's last weekday is folded into the final
   reading day, so no chapter is skipped (in the 2025 plan that means 1 Samuel 24 and 25 on the same day).
 
-## Reconstructed: July-December 2027
-The 2027 file you supplied ends on June 30, 2027. July-December 2027 was
-reconstructed from the end of the 2024 schedule:
-- Old Testament continues from Lamentations 4 through Malachi 4 in the same order as 2024 (verified against it).
-  Malachi 4 lands on Dec 28, so **Dec 29-31, 2027 have no Old Testament chapter** (the OT is finished).
-- New Testament chapters continue in order from 1 Timothy 5 to Matthew 28, with Matthew 28 repeated on the last
-  day (the same pattern as 2025 and 2026).
-- Meditation passages come from the 2024 schedule (they match the 2025/2026 ones for every chapter in this stretch).
-  The 2027 file revised some passages in the first half of the year, so the official July-December 2027 schedule
-  may differ in a few places.
-- Psalms 125-150 fall on the 26 Saturdays from July 3 to Dec 25. The 2024 schedule has no meditation excerpt for
-  Psalms 146 and 147, so those two Saturdays show the full psalm only.
-Days that come from this reconstruction carry a small note in the app. `reconstructed_2027_Jul-Dec.csv` lists them all
-so you can compare against the official schedule when it is released; if it differs, send it over and the plan can be corrected.
-
-## Step 1: Put it online with GitHub Pages
-Installing as an app and the offline cache both need the site to be served over **https**. GitHub Pages
-provides that for free, at a permanent address.
-
-1. Sign in at github.com (or create a free account).
-2. Click **+ → New repository**. Name it (for example `sjt-readings`), set it to **Public**, tick
-   **Add a README file**, and click **Create repository**.
-3. Click **Add file → Upload files**, drag in all the app files (`index.html`, `app.js`, `plan.js`,
-   `manifest.json`, `service-worker.js` and the four `icon-*.png` files), and click **Commit changes**.
-4. Go to **Settings → Pages**. Under "Build and deployment", set Source to **Deploy from a branch**,
-   choose branch **main** and folder **/ (root)**, and click **Save**.
-5. After a minute or two the page shows your address, like `https://yourname.github.io/sjt-readings/`.
+## Step 1: Point your browser to vicstander.github.io/sjt
 
 ## Step 2: Install it on your phone
 
 ### Android (Chrome)
-1. Open the https URL from Step 1 in **Chrome** on your phone.
+1. Open vicstander.github.io/sjt in **Chrome** on your phone.
 2. Tap the **⋮** menu in the top right.
 3. Tap **Install app** (or **Add to Home screen** on older Chrome versions).
 4. Confirm — an icon appears on your home screen and app drawer.
@@ -87,7 +61,7 @@ provides that for free, at a permanent address.
 
 ### iPhone (Safari)
 Use **Safari** for this; other iPhone browsers don't offer a proper install.
-1. Open the https address in Safari.
+1. Open vicstander.github.io/sjt in Safari.
 2. Tap the **Share** button (the square with an arrow pointing up) at the bottom of the screen.
 3. Scroll down and tap **Add to Home Screen**. (If you don't see it, tap **Edit Actions** to add it.)
 4. Edit the name if you like (for example "SJT Daily"), leave **Open as Web App** on if it appears, and tap **Add**.
@@ -101,6 +75,8 @@ Local storage is per-browser-install, so the API key you entered on
 desktop won't carry over automatically. Open the installed app once, tap
 **Settings** in the top right, and paste your ESV key in — same as before.
 
+Your API key is never stored in the repository. Each person's key stays on their own device.
+
 ## Notes
 - The app shell (layout, today's readings, navigation) loads instantly
   and works offline once it's been opened once, thanks to the service
@@ -108,19 +84,3 @@ desktop won't carry over automatically. Open the installed app once, tap
   since that's a live request to api.esv.org.
 - Per ESV's terms, the app includes their copyright notice and a link to
   esv.org in the footer — please keep that intact if you customize things.
-
-## Updating the app
-1. Open your repository on github.com.
-2. Click **Add file → Upload files** and drag in only the files that changed. Files with the same name
-   replace the old ones.
-3. Add a short note describing the change (for example "Updated how-to wording") and click **Commit changes**.
-4. Wait a minute or two for the live site to update. You can watch progress under the **Actions** tab.
-5. On your phone, open the installed app. It may need one extra reload (close it and reopen) to show the new version.
-
-**Good to know**
-- Every commit is saved as a new version, and the old ones are kept. Open any file and click **History** to see
-  or restore an earlier version.
-- Your friends always get the newest files. Nobody has to reinstall; installed copies update themselves.
-- When you change `app.js`, `index.html` or `plan.js`, also bump the version number in `service-worker.js`
-  (for example `sjt-shell-v8` to `sjt-shell-v9`) so phones pick up the change.
-- Your API key is never stored in the repository. Each person's key stays on their own device.
