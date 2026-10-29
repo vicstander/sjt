@@ -47,12 +47,12 @@ Calendars don't always match the plan's length, so:
 - **One fewer weekday** (e.g. 2028, 2033, 2034): the plan's last weekday is folded into the final
   reading day, so no chapter is skipped (in the 2025 plan that means 1 Samuel 24 and 25 on the same day).
 
-## Step 1: Point your browser to vicstander.github.io/sjt
+## Step 1: Point your browser to [vicstander.github.io/sjt](https://vicstander.github.io/sjt)
 
 ## Step 2: Install it on your phone
 
 ### Android (Chrome)
-1. Open vicstander.github.io/sjt in **Chrome** on your phone.
+1. Open [vicstander.github.io/sjt](https://vicstander.github.io/sjt) in **Chrome** on your phone.
 2. Tap the **⋮** menu in the top right.
 3. Tap **Install app** (or **Add to Home screen** on older Chrome versions).
 4. Confirm — an icon appears on your home screen and app drawer.
@@ -61,7 +61,7 @@ Calendars don't always match the plan's length, so:
 
 ### iPhone (Safari)
 Use **Safari** for this; other iPhone browsers don't offer a proper install.
-1. Open vicstander.github.io/sjt in Safari.
+1. Open [vicstander.github.io/sjt](https://vicstander.github.io/sjt) in Safari.
 2. Tap the **Share** button (the square with an arrow pointing up) at the bottom of the screen.
 3. Scroll down and tap **Add to Home Screen**. (If you don't see it, tap **Edit Actions** to add it.)
 4. Edit the name if you like (for example "SJT Daily"), leave **Open as Web App** on if it appears, and tap **Add**.
